@@ -1,5 +1,5 @@
 # Contributer:
-# Enoch Chan - 261160969
+# Enoch
 
 import sqlite3
 from flask import current_app

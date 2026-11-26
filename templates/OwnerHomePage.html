@@ -1,433 +1,602 @@
 <!-- Contributer:
- Brian Morava - 261032388
- Omer Ege Ozyaba - 261069925
- Enoch Chan - 261160969
+  Brian
+  Omer
+  Enoch
 
 
 
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookly - Owner Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='homepage.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='homepage.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+  <body>
     <div class="page">
-        <div class="card">
-            <section class="left-panel">
-                <div class="owner-tab-view" id="mySlotsView">
-                    <h1>My Slots</h1>
-                    <p class="intro">
-                        Manage your recurring office-hours slots. Activate slots to make them visible
-                        to students, or delete slots you no longer need.
-                    </p>
+      <div class="card">
+        <section class="left-panel">
+          <div class="owner-tab-view" id="mySlotsView">
+            <h1>My Slots</h1>
+            <p class="intro">
+              Manage your recurring office-hours slots. Activate slots to make
+              them visible to students, or delete slots you no longer need.
+            </p>
 
-                    <div style="margin-bottom:14px; display:flex; gap:8px; flex-wrap:wrap;">
-                        <button class="table-action primary" onclick="ownerSwitchTab('createOHView')">
-                            + Create office hours
-                        </button>
-                        <button class="table-action" onclick="activateAllSlots()">Activate all</button>
-                        <button class="table-action" onclick="deactivateAllSlots()">Deactivate all</button>
-                    </div>
+            <div
+              style="
+                margin-bottom: 14px;
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+              "
+            >
+              <button
+                class="table-action primary"
+                onclick="ownerSwitchTab('createOHView')"
+              >
+                + Create office hours
+              </button>
+              <button class="table-action" onclick="activateAllSlots()">
+                Activate all
+              </button>
+              <button class="table-action" onclick="deactivateAllSlots()">
+                Deactivate all
+              </button>
+            </div>
 
-                    <div class="appt-table-wrap">
-                        <table class="appt-table" id="ownerSlotsTable">
-                            <thead>
-                                <tr>
-                                    <th>Slot ID</th>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Status</th>
-                                    <th>Booked By</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="8" class="appt-table-empty">Loading time slots...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <div class="appt-table-wrap">
+              <table class="appt-table" id="ownerSlotsTable">
+                <thead>
+                  <tr>
+                    <th>Slot ID</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Booked By</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="8" class="appt-table-empty">
+                      Loading time slots...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="booking-note" id="slotsMsg"></div>
+            <div class="error-note" id="slotsError"></div>
+          </div>
+
+          <div class="owner-tab-view" id="createOHView" style="display: none">
+            <h1>Create Office Hours</h1>
+            <p class="intro">
+              Define weekly recurring time slots. They start as private —
+              activate them from "My Slots" when you're ready for students to
+              book.
+            </p>
+
+            <div class="slots-card">
+              <label class="request-label" for="ohStartDate">Start date</label>
+              <input type="date" class="request-select" id="ohStartDate" />
+
+              <label class="request-label" for="ohWeeks">Number of weeks</label>
+              <input
+                type="number"
+                class="request-select"
+                id="ohWeeks"
+                value="12"
+                min="1"
+                max="52"
+              />
+
+              <label class="request-label">Weekly slot definitions</label>
+              <div id="ohSlotEntries">
+                <div class="oh-slot-entry">
+                  <div class="oh-slot-row">
+                    <div>
+                      <label class="request-label">Day</label>
+                      <select class="request-select oh-day">
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                      </select>
                     </div>
-                    <div class="booking-note" id="slotsMsg"></div>
-                    <div class="error-note" id="slotsError"></div>
+                    <div>
+                      <label class="request-label">Start</label>
+                      <input
+                        type="time"
+                        class="request-select oh-start"
+                        value="10:00"
+                      />
+                    </div>
+                    <div>
+                      <label class="request-label">End</label>
+                      <input
+                        type="time"
+                        class="request-select oh-end"
+                        value="10:15"
+                      />
+                    </div>
+                  </div>
                 </div>
+              </div>
 
-                <div class="owner-tab-view" id="createOHView" style="display:none;">
-                    <h1>Create Office Hours</h1>
-                    <p class="intro">
-                        Define weekly recurring time slots. They start as private — activate them
-                        from "My Slots" when you're ready for students to book.
-                    </p>
+              <button
+                type="button"
+                class="table-action"
+                onclick="addOHSlotEntry()"
+                style="margin-bottom: 18px"
+              >
+                + Add another slot
+              </button>
 
-                    <div class="slots-card">
-                        <label class="request-label" for="ohStartDate">Start date</label>
-                        <input type="date" class="request-select" id="ohStartDate">
+              <div class="book-area show">
+                <button
+                  type="button"
+                  class="book-button"
+                  id="ohCreateBtn"
+                  onclick="createOfficeHours()"
+                >
+                  Create office hours
+                </button>
 
-                        <label class="request-label" for="ohWeeks">Number of weeks</label>
-                        <input type="number" class="request-select" id="ohWeeks" value="12" min="1" max="52">
+                <button
+                  type="button"
+                  class="book-button"
+                  onclick="ownerSwitchTab('mySlotsView')"
+                  style="
+                    margin-top: 8px;
+                    background: #fff;
+                    color: #111;
+                    border: 1px solid #8d8d8d;
+                  "
+                >
+                  ← Back to my slots
+                </button>
 
-                        <label class="request-label">Weekly slot definitions</label>
-                        <div id="ohSlotEntries">
-                            <div class="oh-slot-entry">
-                                <div class="oh-slot-row">
-                                    <div>
-                                        <label class="request-label">Day</label>
-                                        <select class="request-select oh-day">
-                                            <option>Monday</option><option>Tuesday</option>
-                                            <option>Wednesday</option><option>Thursday</option>
-                                            <option>Friday</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="request-label">Start</label>
-                                        <input type="time" class="request-select oh-start" value="10:00">
-                                    </div>
-                                    <div>
-                                        <label class="request-label">End</label>
-                                        <input type="time" class="request-select oh-end" value="10:15">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="booking-note" id="ohSuccessNote"></div>
+                <div class="error-note" id="ohErrorNote"></div>
+              </div>
+            </div>
+          </div>
 
-                        <button type="button" class="table-action" onclick="addOHSlotEntry()" style="margin-bottom:18px;">
-                            + Add another slot
-                        </button>
+          <div class="owner-tab-view" id="createGMView" style="display: none">
+            <h1>Create Group Meeting</h1>
+            <p class="intro">
+              Define available time options and invite users. They'll vote on
+              which times work, and you pick the winning slot from "Manage Group
+              Meetings."
+            </p>
 
-                        <div class="book-area show">
-                            <button type="button" class="book-button" id="ohCreateBtn" onclick="createOfficeHours()">
-                                Create office hours
-                            </button>
+            <div class="slots-card">
+              <label class="request-label" for="gmTitle">Meeting title</label>
+              <input
+                type="text"
+                class="request-select"
+                id="gmTitle"
+                placeholder="e.g. COMP 307 Project Sync"
+              />
 
-                            <button type="button" class="book-button" onclick="ownerSwitchTab('mySlotsView')"
-                                style="margin-top:8px; background:#fff; color:#111; border:1px solid #8d8d8d;">
-                                ← Back to my slots
-                            </button>
+              <label class="request-label" for="gmDesc"
+                >Description (optional)</label
+              >
+              <textarea
+                class="request-textarea"
+                id="gmDesc"
+                placeholder="What is this meeting about?"
+                style="min-height: 60px"
+              ></textarea>
 
-                            <div class="booking-note" id="ohSuccessNote"></div>
-                            <div class="error-note" id="ohErrorNote"></div>
-                        </div>
+              <label class="request-label">Time options</label>
+              <div id="gmSlotEntries">
+                <div class="gm-slot-entry">
+                  <div class="oh-slot-row">
+                    <div>
+                      <label class="request-label">Date</label>
+                      <input type="date" class="request-select gm-date" />
                     </div>
+                    <div>
+                      <label class="request-label">Start Time</label>
+                      <input
+                        type="time"
+                        class="request-select gm-start"
+                        value="14:00"
+                      />
+                    </div>
+                    <div>
+                      <label class="request-label">End Time</label>
+                      <input
+                        type="time"
+                        class="request-select gm-end"
+                        value="15:00"
+                      />
+                    </div>
+                  </div>
                 </div>
+              </div>
 
-                <div class="owner-tab-view" id="createGMView" style="display:none;">
-                    <h1>Create Group Meeting</h1>
-                    <p class="intro">
-                        Define available time options and invite users. They'll vote on which times
-                        work, and you pick the winning slot from "Manage Group Meetings."
-                    </p>
+              <div class="slots-card" style="margin-top: 12px">
+                <label class="request-label">
+                  <input
+                    type="checkbox"
+                    id="gmIsRecurring"
+                    onchange="toggleGMRecurrenceFields()"
+                  />
+                  Make this meeting recurring after finalization
+                </label>
 
-                    <div class="slots-card">
-                        <label class="request-label" for="gmTitle">Meeting title</label>
-                        <input type="text" class="request-select" id="gmTitle" placeholder="e.g. COMP 307 Project Sync">
+                <div
+                  id="gmRecurrenceFields"
+                  style="display: none; margin-top: 12px"
+                >
+                  <label class="request-label" for="gmRecurrenceType"
+                    >Recurring frequency</label
+                  >
+                  <select class="request-select" id="gmRecurrenceType">
+                    <option value="weekly">Weekly</option>
+                  </select>
 
-                        <label class="request-label" for="gmDesc">Description (optional)</label>
-                        <textarea class="request-textarea" id="gmDesc"
-                            placeholder="What is this meeting about?" style="min-height:60px;"></textarea>
-
-                        <label class="request-label">Time options</label>
-                        <div id="gmSlotEntries">
-                            <div class="gm-slot-entry">
-                                <div class="oh-slot-row">
-                                    <div>
-                                        <label class="request-label">Date</label>
-                                        <input type="date" class="request-select gm-date">
-                                    </div>
-                                    <div>
-                                        <label class="request-label">Start Time</label>
-                                        <input type="time" class="request-select gm-start" value="14:00">
-                                    </div>
-                                    <div>
-                                        <label class="request-label">End Time</label>
-                                        <input type="time" class="request-select gm-end" value="15:00">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slots-card" style="margin-top:12px;">
-                            <label class="request-label">
-                                <input type="checkbox" id="gmIsRecurring" onchange="toggleGMRecurrenceFields()">
-                                Make this meeting recurring after finalization
-                            </label>
-
-                            <div id="gmRecurrenceFields" style="display:none; margin-top:12px;">
-                                <label class="request-label" for="gmRecurrenceType">Recurring frequency</label>
-                                <select class="request-select" id="gmRecurrenceType">
-                                    <option value="weekly">Weekly</option>
-                                </select>
-
-                                <label class="request-label" for="gmRecurrenceEndDate">Repeat until</label>
-                                <input type="date" class="request-select" id="gmRecurrenceEndDate">
-                            </div>
-                        </div>
-
-                        <button type="button" class="table-action" onclick="addGMSlotEntry()" style="margin-bottom:18px;">
-                            + Add time option
-                        </button>
-
-                        <label class="request-label" for="gmInvitees">Invite users (one email per line)</label>
-                        <textarea class="request-textarea" id="gmInvitees"
-                            placeholder="alice.wang@mail.mcgill.ca&#10;bob.smith@mail.mcgill.ca"
-                            style="min-height:80px;"></textarea>
-
-                        <div class="book-area show">
-                            <button type="button" class="book-button" onclick="createGroupMeeting()">
-                                Create &amp; send invitations
-                            </button>
-                            <button type="button" class="book-button" onclick="ownerSwitchTab('manageGMView')"
-                                style="margin-top:8px; background:#fff; color:#111; border:1px solid #8d8d8d;">
-                                ← Back to group meetings
-                            </button>
-                            <div class="booking-note" id="gmSuccessNote"></div>
-                            <div class="error-note" id="gmErrorNote"></div>
-                        </div>
-                    </div>
+                  <label class="request-label" for="gmRecurrenceEndDate"
+                    >Repeat until</label
+                  >
+                  <input
+                    type="date"
+                    class="request-select"
+                    id="gmRecurrenceEndDate"
+                  />
                 </div>
+              </div>
 
-                <div class="owner-tab-view" id="manageGMView" style="display:none;">
-                    <h1>Group Meetings</h1>
-                    <p class="intro">
-                        View, create, and finalize your group meetings.
-                    </p>
+              <button
+                type="button"
+                class="table-action"
+                onclick="addGMSlotEntry()"
+                style="margin-bottom: 18px"
+              >
+                + Add time option
+              </button>
 
-                    <div style="margin-bottom:14px; display:flex; gap:8px; flex-wrap:wrap;">
-                        <button class="table-action primary" onclick="ownerSwitchTab('createGMView')">
-                            + Create group meeting
-                        </button>
-                    </div>
+              <label class="request-label" for="gmInvitees"
+                >Invite users (one email per line)</label
+              >
+              <textarea
+                class="request-textarea"
+                id="gmInvitees"
+                placeholder="alice.wang@mail.mcgill.ca&#10;bob.smith@mail.mcgill.ca"
+                style="min-height: 80px"
+              ></textarea>
 
-                    <div class="meeting-tables">
-                        <div class="appt-table-wrap">
-                            <table class="appt-table" id="groupMeetingsManageTable">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Date Range</th>
-                                        <th>Invite Link</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="5" class="appt-table-empty">Loading group meetings...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+              <div class="book-area show">
+                <button
+                  type="button"
+                  class="book-button"
+                  onclick="createGroupMeeting()"
+                >
+                  Create &amp; send invitations
+                </button>
+                <button
+                  type="button"
+                  class="book-button"
+                  onclick="ownerSwitchTab('manageGMView')"
+                  style="
+                    margin-top: 8px;
+                    background: #fff;
+                    color: #111;
+                    border: 1px solid #8d8d8d;
+                  "
+                >
+                  ← Back to group meetings
+                </button>
+                <div class="booking-note" id="gmSuccessNote"></div>
+                <div class="error-note" id="gmErrorNote"></div>
+              </div>
+            </div>
+          </div>
 
-                    <div class="booking-note" id="mgmSuccessNote"></div>
-                    <div class="error-note" id="mgmErrorNote"></div>
+          <div class="owner-tab-view" id="manageGMView" style="display: none">
+            <h1>Group Meetings</h1>
+            <p class="intro">View, create, and finalize your group meetings.</p>
+
+            <div
+              style="
+                margin-bottom: 14px;
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+              "
+            >
+              <button
+                class="table-action primary"
+                onclick="ownerSwitchTab('createGMView')"
+              >
+                + Create group meeting
+              </button>
+            </div>
+
+            <div class="meeting-tables">
+              <div class="appt-table-wrap">
+                <table class="appt-table" id="groupMeetingsManageTable">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Date Range</th>
+                      <th>Invite Link</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="5" class="appt-table-empty">
+                        Loading group meetings...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="booking-note" id="mgmSuccessNote"></div>
+            <div class="error-note" id="mgmErrorNote"></div>
+          </div>
+
+          <div class="owner-tab-view" id="finalizeGMView" style="display: none">
+            <h1>Finalize Meeting</h1>
+            <p class="intro" id="finalizeIntro"></p>
+
+            <div class="selection-card">
+              <div class="selection-label">Meeting</div>
+              <div class="selection-value" id="finalizeTitle"></div>
+            </div>
+
+            <div class="slots-card">
+              <h2 class="slots-card-title">Vote results</h2>
+              <p class="slots-note">
+                Pick the slot with the most votes, then finalize.
+              </p>
+              <div id="finalizeSlotList"></div>
+
+              <div class="book-area show" style="margin-top: 18px">
+                <button
+                  type="button"
+                  class="book-button"
+                  id="backToManageGMBtn"
+                  style="
+                    background: #fff;
+                    color: #111;
+                    border: 1px solid #8d8d8d;
+                  "
+                >
+                  ← Back to group meetings
+                </button>
+                <div class="booking-note" id="finalizeSuccessNote"></div>
+                <div class="error-note" id="finalizeErrorNote"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ TAB 5: Pending Requests ═══ -->
+          <div class="owner-tab-view" id="pendingView" style="display: none">
+            <h1>Pending Requests</h1>
+            <p class="intro">
+              Students who want to meet with you. Accept or decline each
+              request. Use the mailto: link to notify them of your decision.
+            </p>
+
+            <div class="appt-table-wrap">
+              <table class="appt-table" id="pendingRequestsTable">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="6" class="appt-table-empty">
+                      Loading pending requests ...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="booking-note" id="pendingSuccessNote"></div>
+            <div class="error-note" id="pendingErrorNote"></div>
+          </div>
+
+          <div class="owner-tab-view" id="ownerApptsView" style="display: none">
+            <h1>My Appointments</h1>
+            <p class="intro">
+              All your confirmed appointments across meeting types.
+            </p>
+
+            <div class="meeting-tables">
+              <h2>Individual meetings</h2>
+              <div class="appt-table-wrap">
+                <table class="appt-table" id="ownerIndividualTable">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Zoom Link</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="7" class="appt-table-empty">
+                        Loading individual meetings ...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="meeting-tables">
+              <h2>Group meetings</h2>
+              <div class="appt-table-wrap">
+                <table class="appt-table" id="ownerGroupTable">
+                  <thead>
+                    <tr>
+                      <th>Meeting Title</th>
+                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Recurrence</th>
+                      <th>Zoom Link</th>
+                      <th>Status</th>
+                      <th>Attendees</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="9" class="appt-table-empty">
+                        Loading group meetings...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="meeting-tables">
+              <h2>Office hours bookings</h2>
+              <div class="appt-table-wrap">
+                <table class="appt-table" id="ownerOHTable">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Date</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                      <th>Zoom Link</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ownerOHTableBody">
+                    <tr>
+                      <td colspan="6" class="appt-table-empty">Loading...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="right-panel">
+          <h2>Bookly</h2>
+
+          <div class="current-user-box" id="currentUserBox">
+            <div>
+              <strong>Logged-in user:</strong>
+              <span id="currentUserName">Loading...</span>
+            </div>
+            <div>
+              <strong>Email:</strong>
+              <span id="currentUserEmail">Loading...</span>
+            </div>
+            <div>
+              <strong>Role:</strong>
+              <span id="currentUserRole">Loading...</span>
+            </div>
+            <button type="button" class="logout-button" id="logoutButton">
+              Log out
+            </button>
+          </div>
+
+          <div class="status-card show" id="inviteUrlCard">
+            <h2 class="status-card-title">Invitation URL</h2>
+            <p class="slots-note">
+              Share this link so students can go directly to your activated
+              office-hour slots.
+            </p>
+            <div class="invite-url-box">
+              <span class="invite-url-text" id="ownerBookingInviteUrl"
+                >Loading...</span
+              >
+              <button class="table-action" onclick="copyInviteUrl(this)">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="right-panel-tabs">
+            <button onclick="ownerSwitchTab('mySlotsView')">
+              <h3>My slots</h3>
+            </button>
+
+            <button onclick="ownerSwitchTab('manageGMView')">
+              <h3>Group meetings</h3>
+            </button>
+
+            <button onclick="ownerSwitchTab('pendingView')">
+              <h3>
+                Pending requests
+                <span class="notif-count" id="pendingRequestCount"></span>
+              </h3>
+            </button>
+
+            <button onclick="ownerSwitchTab('ownerApptsView')">
+              <h3>View appointments</h3>
+            </button>
+
+            <button type="button" onclick="window.location.href = '/book'">
+              <h3>Book an appointment</h3>
+            </button>
+
+            <div class="notif-wrapper">
+              <button
+                class="notif-toggle"
+                id="notifToggle"
+                onclick="toggleNotifications(event)"
+              >
+                <h3>
+                  Notifications
+                  <span class="notif-count" id="notifCount"></span>
+                </h3>
+              </button>
+
+              <div class="notif-panel" id="notifPanel">
+                <div class="notif-header">Notifications</div>
+                <div class="notif-list" id="notifList">
+                  <div class="notif-item">
+                    <div class="notif-text">No notifications yet.</div>
+                  </div>
                 </div>
-
-                <div class="owner-tab-view" id="finalizeGMView" style="display:none;">
-                    <h1>Finalize Meeting</h1>
-                    <p class="intro" id="finalizeIntro"></p>
-
-                    <div class="selection-card">
-                        <div class="selection-label">Meeting</div>
-                        <div class="selection-value" id="finalizeTitle"></div>
-                    </div>
-
-                    <div class="slots-card">
-                        <h2 class="slots-card-title">Vote results</h2>
-                        <p class="slots-note">Pick the slot with the most votes, then finalize.</p>
-                        <div id="finalizeSlotList"></div>
-
-                        <div class="book-area show" style="margin-top:18px;">
-                            <button type="button" class="book-button" id="backToManageGMBtn"
-                                style="background:#fff; color:#111; border:1px solid #8d8d8d;">
-                                ← Back to group meetings
-                            </button>
-                            <div class="booking-note" id="finalizeSuccessNote"></div>
-                            <div class="error-note" id="finalizeErrorNote"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ═══ TAB 5: Pending Requests ═══ -->
-                <div class="owner-tab-view" id="pendingView" style="display:none;">
-                    <h1>Pending Requests</h1>
-                    <p class="intro">
-                        Students who want to meet with you. Accept or decline each request.
-                        Use the mailto: link to notify them of your decision.
-                    </p>
-
-                    <div class="appt-table-wrap">
-                        <table class="appt-table" id="pendingRequestsTable">
-                            <thead>
-                                <tr>
-                                    <th>Student</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="6" class="appt-table-empty">Loading pending requests ...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="booking-note" id="pendingSuccessNote"></div>
-                    <div class="error-note" id="pendingErrorNote"></div>
-                </div>
-
-                <div class="owner-tab-view" id="ownerApptsView" style="display:none;">
-                    <h1>My Appointments</h1>
-                    <p class="intro">
-                        All your confirmed appointments across meeting types.
-                    </p>
-
-                    <div class="meeting-tables">
-                        <h2>Individual meetings</h2>
-                        <div class="appt-table-wrap">
-                            <table class="appt-table" id="ownerIndividualTable">
-                                <thead>
-                                    <tr>
-                                        <th>Student</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Zoom Link</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="7" class="appt-table-empty">Loading individual meetings ...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="meeting-tables">
-                        <h2>Group meetings</h2>
-                        <div class="appt-table-wrap">
-                            <table class="appt-table" id="ownerGroupTable">
-                                <thead>
-                                    <tr>
-                                        <th>Meeting Title</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Recurrence</th>
-                                        <th>Zoom Link</th>
-                                        <th>Status</th>
-                                        <th>Attendees</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="9" class="appt-table-empty">Loading group meetings...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="meeting-tables">
-                        <h2>Office hours bookings</h2>
-                        <div class="appt-table-wrap">
-                            <table class="appt-table" id="ownerOHTable">
-                                <thead>
-                                    <tr>
-                                        <th>Student</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Zoom Link</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ownerOHTableBody">
-                                    <tr>
-                                        <td colspan="6" class="appt-table-empty">Loading...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-            <section class="right-panel">
-                <h2>Bookly</h2>
-
-                <div class="current-user-box" id="currentUserBox">
-                    <div><strong>Logged-in user:</strong> <span id="currentUserName">Loading...</span></div>
-                    <div><strong>Email:</strong> <span id="currentUserEmail">Loading...</span></div>
-                    <div><strong>Role:</strong> <span id="currentUserRole">Loading...</span></div>
-                    <button type="button" class="logout-button" id="logoutButton">Log out</button>
-                </div>
-
-                <div class="status-card show" id="inviteUrlCard">
-                    <h2 class="status-card-title">Invitation URL</h2>
-                    <p class="slots-note">
-                        Share this link so students can go directly to your activated office-hour slots.
-                    </p>
-                    <div class="invite-url-box">
-                        <span class="invite-url-text" id="ownerBookingInviteUrl">Loading...</span>
-                        <button class="table-action" onclick="copyInviteUrl(this)">Copy</button>
-                    </div>
-                </div>
-
-                <div class="right-panel-tabs">
-                    <button onclick="ownerSwitchTab('mySlotsView')">
-                        <h3>My slots</h3>
-                    </button>
-
-                    <button onclick="ownerSwitchTab('manageGMView')">
-                        <h3>Group meetings</h3>
-                    </button>
-
-                    <button onclick="ownerSwitchTab('pendingView')">
-                        <h3>Pending requests <span class="notif-count" id="pendingRequestCount"></span></h3>
-                    </button>
-
-                    <button onclick="ownerSwitchTab('ownerApptsView')">
-                        <h3>View appointments</h3>
-                    </button>
-
-                    <button type="button" onclick="window.location.href='/book'">
-                        <h3>Book an appointment</h3>
-                    </button>
-
-                    <div class="notif-wrapper">
-                        <button class="notif-toggle" id="notifToggle" onclick="toggleNotifications(event)">
-                            <h3>Notifications <span class="notif-count" id="notifCount"></span></h3>
-                        </button>
-
-                        <div class="notif-panel" id="notifPanel">
-                            <div class="notif-header">Notifications</div>
-                            <div class="notif-list" id="notifList">
-                                <div class="notif-item">
-                                    <div class="notif-text">No notifications yet.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='owner-homepage.js') }}"></script>
-</body>
+  </body>
 </html>

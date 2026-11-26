@@ -1,6 +1,6 @@
 # Contributers:
-# Maxim Miladinov-Genov - 260989667
-# Enoch Chan - 261160969
+# Maxim
+# Enoch
 
 
 from flask import Blueprint, request, current_app, jsonify, session

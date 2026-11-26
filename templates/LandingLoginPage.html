@@ -1,73 +1,115 @@
 <!-- Contributer:
- Brian Morava - 261032388
+  Brian
 
 
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookly - McGill Booking Application</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
-</head>
-<body>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+  </head>
+  <body>
     <div class="page">
-        <div class="card">
-            <section class="left-panel">
-                <h1>Bookly</h1>
+      <div class="card">
+        <section class="left-panel">
+          <h1>Bookly</h1>
 
-                <div class="intro">
-                    <p>
-                        Bookly is a McGill booking application for office hours, meeting requests,
-                        and group scheduling.
-                    </p>
-                    <p>
-                        Students can reserve appointments with professors and teaching assistants
-                        without relying on long email chains.
-                    </p>
-                </div>
+          <div class="intro">
+            <p>
+              Bookly is a McGill booking application for office hours, meeting
+              requests, and group scheduling.
+            </p>
+            <p>
+              Students can reserve appointments with professors and teaching
+              assistants without relying on long email chains.
+            </p>
+          </div>
 
-                <div class="contact-item"><strong>Owners:</strong> @mcgill.ca accounts create, activate, and manage booking slots.</div>
-                <div class="contact-item"><strong>Users:</strong> @mail.mcgill.ca and @mcgill.ca accounts can request and reserve active slots.</div>
-                <div class="contact-item"><strong>Booking types:</strong> request a meeting, group meeting scheduling, and recurring office hours.</div>
-            </section>
+          <div class="contact-item">
+            <strong>Owners:</strong> @mcgill.ca accounts create, activate, and
+            manage booking slots.
+          </div>
+          <div class="contact-item">
+            <strong>Users:</strong> @mail.mcgill.ca and @mcgill.ca accounts can
+            request and reserve active slots.
+          </div>
+          <div class="contact-item">
+            <strong>Booking types:</strong> request a meeting, group meeting
+            scheduling, and recurring office hours.
+          </div>
+        </section>
 
-            <section class="right-panel">
-                <h2>Log in</h2>
-                <p class="panel-text">
-                    Sign in with your McGill email to open your dashboard, review appointments,
-                    and book available office hours.
-                </p>
+        <section class="right-panel">
+          <h2>Log in</h2>
+          <p class="panel-text">
+            Sign in with your McGill email to open your dashboard, review
+            appointments, and book available office hours.
+          </p>
 
-                <form id="loginForm" action="#" method="post" novalidate>
-                    <div class="required-note">Fields marked with * are required.</div>
+          <form id="loginForm" action="#" method="post" novalidate>
+            <div class="required-note">Fields marked with * are required.</div>
 
-                    <div class="field-group">
-                        <label for="email">*Email</label>
-                        <input type="email" id="email" name="email" placeholder="name@mcgill.ca or name@mail.mcgill.ca" autocomplete="email" required data-label="Email">
-                    </div>
+            <div class="field-group">
+              <label for="email">*Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="name@mcgill.ca or name@mail.mcgill.ca"
+                autocomplete="email"
+                required
+                data-label="Email"
+              />
+            </div>
 
-                    <div class="field-group">
-                        <label for="password">*Password</label>
-                        <input type="password" id="password" name="password" placeholder="Password" autocomplete="current-password" required data-label="Password">
-                    </div>
+            <div class="field-group">
+              <label for="password">*Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                autocomplete="current-password"
+                required
+                data-label="Password"
+              />
+            </div>
 
-                    <button type="submit" id="loginButton">Log In</button>
-                    <a href="/create-account" class="secondary-button">Create Account</a>
-                </form>
+            <button type="submit" id="loginButton">Log In</button>
+            <a href="/create-account" class="secondary-button"
+              >Create Account</a
+            >
+          </form>
 
-                <h2 class="section-heading">How Bookly works</h2>
-                <ul class="info-list">
-                    <li>Only McGill email addresses can register for the application.</li>
-                    <li>Owners use @mcgill.ca accounts to create private slots, activate public slots, and share invitation URLs.</li>
-                    <li>After login, users can see appointments, book open slots, cancel bookings, and email slot owners through mailto links.</li>
-                </ul>
-            </section>
-        </div>
+          <h2 class="section-heading">How Bookly works</h2>
+          <ul class="info-list">
+            <li>
+              Only McGill email addresses can register for the application.
+            </li>
+            <li>
+              Owners use @mcgill.ca accounts to create private slots, activate
+              public slots, and share invitation URLs.
+            </li>
+            <li>
+              After login, users can see appointments, book open slots, cancel
+              bookings, and email slot owners through mailto links.
+            </li>
+          </ul>
+        </section>
+      </div>
     </div>
     <script src="{{ url_for('static', filename='login.js') }}"></script>
-</body>
+  </body>
 </html>

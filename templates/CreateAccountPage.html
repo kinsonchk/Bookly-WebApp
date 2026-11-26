@@ -1,103 +1,175 @@
 <!-- Contributer
- Brian Morava - 261032388
+  Brian
 
 
 -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookly - Create Account</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='create-account.css') }}">
-</head>
-<body>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='create-account.css') }}"
+    />
+  </head>
+  <body>
     <div class="page">
-        <div class="card">
-            <section class="left-panel">
-                <h1>Bookly</h1>
-                <div class="intro">
-                    <p>Create your Bookly account to reserve office hours and manage bookings with
-                    McGill professors and teaching assistants.</p>
+      <div class="card">
+        <section class="left-panel">
+          <h1>Bookly</h1>
+          <div class="intro">
+            <p>
+              Create your Bookly account to reserve office hours and manage
+              bookings with McGill professors and teaching assistants.
+            </p>
+          </div>
+          <div class="contact-item">
+            <strong>McGill only:</strong> use a valid @mcgill.ca or
+            @mail.mcgill.ca address.
+          </div>
+          <div class="contact-item">
+            <strong>Owners:</strong> @mcgill.ca accounts can create and manage
+            booking slots.
+          </div>
+          <div class="contact-item">
+            <strong>Users:</strong> all registered McGill accounts can reserve
+            active appointments.
+          </div>
+        </section>
+
+        <section class="right-panel">
+          <!-- Registration form -->
+          <div id="formStep">
+            <h2>Create account</h2>
+            <p class="panel-text">
+              Fill in your details. We'll send a verification code to your
+              email.
+            </p>
+
+            <form id="createAccountForm" novalidate>
+              <div class="required-note">
+                Fields marked with * are required.
+              </div>
+
+              <div class="name-row">
+                <div class="field-group">
+                  <label for="firstName">*First Name</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    placeholder="First Name"
+                    required
+                    data-label="First Name"
+                  />
                 </div>
-                <div class="contact-item"><strong>McGill only:</strong> use a valid @mcgill.ca or @mail.mcgill.ca address.</div>
-                <div class="contact-item"><strong>Owners:</strong> @mcgill.ca accounts can create and manage booking slots.</div>
-                <div class="contact-item"><strong>Users:</strong> all registered McGill accounts can reserve active appointments.</div>
-            </section>
-
-            <section class="right-panel">
-
-                <!-- Registration form -->
-                <div id="formStep">
-                    <h2>Create account</h2>
-                    <p class="panel-text">Fill in your details. We'll send a verification code to your email.</p>
-
-                    <form id="createAccountForm" novalidate>
-                        <div class="required-note">Fields marked with * are required.</div>
-
-                        <div class="name-row">
-                            <div class="field-group">
-                                <label for="firstName">*First Name</label>
-                                <input type="text" id="firstName" placeholder="First Name" required data-label="First Name">
-                            </div>
-                            <div class="field-group">
-                                <label for="lastName">*Last Name</label>
-                                <input type="text" id="lastName" placeholder="Last Name" required data-label="Last Name">
-                            </div>
-                        </div>
-
-                        <div class="field-group">
-                            <label for="createEmail">*Email</label>
-                            <input type="email" id="createEmail" placeholder="name@mcgill.ca or name@mail.mcgill.ca" autocomplete="email" required data-label="Email">
-                        </div>
-
-                        <div class="field-group">
-                            <label for="createPassword">*Password</label>
-                            <input type="password" id="createPassword" placeholder="Password" autocomplete="new-password" required data-label="Password">
-                        </div>
-
-                        <div class="field-group">
-                            <label for="confirmPassword">*Confirm Password</label>
-                            <input type="password" id="confirmPassword" placeholder="Confirm Password" autocomplete="new-password" required data-label="Confirm Password">
-                        </div>
-
-                        <button type="submit" id="sendCodeBtn">Send verification code</button>
-                    </form>
-                    <div class="msg" id="formMsg"></div>
+                <div class="field-group">
+                  <label for="lastName">*Last Name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    placeholder="Last Name"
+                    required
+                    data-label="Last Name"
+                  />
                 </div>
+              </div>
 
-                <!-- Verification code -->
-                <div id="verifyStep" class="verify-step">
-                    <h2>Verify your email</h2>
-                    <p class="panel-text">Enter the 6-digit code sent to <strong id="verifyEmailDisplay"></strong>.</p>
+              <div class="field-group">
+                <label for="createEmail">*Email</label>
+                <input
+                  type="email"
+                  id="createEmail"
+                  placeholder="name@mcgill.ca or name@mail.mcgill.ca"
+                  autocomplete="email"
+                  required
+                  data-label="Email"
+                />
+              </div>
 
-                    <div class="field-group">
-                        <label for="verifyCode">Verification code</label>
-                        <input type="text" id="verifyCode" class="code-input" maxlength="6" placeholder="e.g. 482910" autocomplete="one-time-code">
-                    </div>
+              <div class="field-group">
+                <label for="createPassword">*Password</label>
+                <input
+                  type="password"
+                  id="createPassword"
+                  placeholder="Password"
+                  autocomplete="new-password"
+                  required
+                  data-label="Password"
+                />
+              </div>
 
-                    <button type="button" id="verifyBtn">Create account</button>
+              <div class="field-group">
+                <label for="confirmPassword">*Confirm Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  autocomplete="new-password"
+                  required
+                  data-label="Confirm Password"
+                />
+              </div>
 
-                    <p class="countdown" id="resendCountdown"></p>
-                    <button type="button" class="resend-link" id="resendBtn" disabled>Resend code</button>
+              <button type="submit" id="sendCodeBtn">
+                Send verification code
+              </button>
+            </form>
+            <div class="msg" id="formMsg"></div>
+          </div>
 
-                    <div class="msg" id="verifyMsg"></div>
-                </div>
+          <!-- Verification code -->
+          <div id="verifyStep" class="verify-step">
+            <h2>Verify your email</h2>
+            <p class="panel-text">
+              Enter the 6-digit code sent to
+              <strong id="verifyEmailDisplay"></strong>.
+            </p>
 
-                <!-- Success -->
-                <div id="successStep" class="verify-step">
-                    <h2>Account created!</h2>
-                    <p class="panel-text">Your Bookly account is ready. Redirecting to sign in...</p>
-                    <div class="msg success show">Registration successful. You will be redirected shortly.</div>
-                    <a href="/" class="return-button show">Go to login now</a>
-                </div>
+            <div class="field-group">
+              <label for="verifyCode">Verification code</label>
+              <input
+                type="text"
+                id="verifyCode"
+                class="code-input"
+                maxlength="6"
+                placeholder="e.g. 482910"
+                autocomplete="one-time-code"
+              />
+            </div>
 
-            </section>
-        </div>
+            <button type="button" id="verifyBtn">Create account</button>
+
+            <p class="countdown" id="resendCountdown"></p>
+            <button type="button" class="resend-link" id="resendBtn" disabled>
+              Resend code
+            </button>
+
+            <div class="msg" id="verifyMsg"></div>
+          </div>
+
+          <!-- Success -->
+          <div id="successStep" class="verify-step">
+            <h2>Account created!</h2>
+            <p class="panel-text">
+              Your Bookly account is ready. Redirecting to sign in...
+            </p>
+            <div class="msg success show">
+              Registration successful. You will be redirected shortly.
+            </div>
+            <a href="/" class="return-button show">Go to login now</a>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='create-account.js') }}"></script>
-</body>
+  </body>
 </html>

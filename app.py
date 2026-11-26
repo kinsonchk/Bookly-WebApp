@@ -1,9 +1,9 @@
 # Contributer
-# Brian Morava - 261032388
-# Maxim Miladinov-Genov - 260989667
-# Omer Ege Ozyaba - 261069925
-# Enoch Chan - 261160969
-# Hoi Kin Chiu - 261142005
+# Brian
+# Maxim
+# Omer
+# Enoch
+# Kinson
 
 
 from flask import Flask, render_template, request, jsonify, session, redirect

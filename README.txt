@@ -15,7 +15,7 @@ This included asking Google AI Search clarifying questions to help resolve front
 
 Name                    Student ID              Code / Features Worked On
 ------------------------------------------------------------------------------------
-Brian Morava            261032388               Landing / Login Page
+Brian                   -                       Landing / Login Page
                                                 Create Account
                                                 Deployment & Web Hosting
                                                 Owner Homepage
@@ -23,23 +23,23 @@ Brian Morava            261032388               Landing / Login Page
                                                 app.py
                                                 Type 3 Feature
 
-Maxim Miladinov-Genov   260989667               Database
+Maxim                   -                       Database
                                                 Type 1 Feature
                                                 Type 2 Feature
                                                 app.py
 
-Omer Ege Ozyaba         261069925               Owner Homepage
+Omer                    -                       Owner Homepage
                                                 User Homepage
                                                 Type 3 Feature
                                                 app.py
                                     
-Hoi Kin Chiu            261142005               Owner Homepage
+Kinson                  -                       Owner Homepage
                                                 User Homepage
                                                 Type 3 Feature
                                                 Database
                                                 app.py
 
-Enoch Chan              261160969               Database
+Enoch                   -                       Database
                                                 Type 1 Feature
                                                 Type 2 Feature 
                                                 Type 3 Feature
